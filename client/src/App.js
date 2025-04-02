@@ -129,7 +129,7 @@ const Footer = () => (
         </Box>
       </Box>
       <Typography variant="body2" align="center" sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 2 }}>
-        © {new Date().getFullYear()} Jobify. All rights reserved.
+        © {new Date().getFullYear()} Mahak - All rights reserved.
       </Typography>
     </Box>
   </motion.div>
