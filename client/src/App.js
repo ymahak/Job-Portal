@@ -3,16 +3,17 @@ import { BrowserRouter as Router, Route, Routes, Navigate, NavLink, useNavigate 
 import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem, IconButton, Link } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { motion } from "framer-motion"; // Animations
+import { motion } from "framer-motion";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import OpportunityList from "./components/Opportunities/OpportunityList";
 import Dashboard from "./components/Dashboard/Dashboard";
 
+// Updated theme with new button color
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1769aa',
+      main: '#1769aa', // Kept for other elements
     },
     secondary: {
       main: '#f50057',
@@ -20,9 +21,27 @@ const theme = createTheme({
     background: {
       default: '#f0f4f8',
     },
+    // Adding custom color for buttons
+    teal: {
+      main: '#26a69a', // Vibrant teal for buttons
+      contrastText: '#fff',
+    },
   },
   typography: {
     fontFamily: '"Quicksand", sans-serif',
+  },
+  components: {
+    // Override Button styles
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#26a69a', // Default button color
+          '&:hover': {
+            backgroundColor: '#00897b', // Darker teal on hover
+          },
+        },
+      },
+    },
   },
 });
 
@@ -55,7 +74,12 @@ const Navbar = () => {
 
   return (
     <motion.div initial={{ y: -70 }} animate={{ y: 0 }} transition={{ duration: 0.6 }}>
-      <AppBar position="fixed" sx={{ width: '100%', background: 'linear-gradient(to right,rgb(2, 237, 241),rgb(10, 243, 211))' }}>
+      {/* Updated header with purple gradient */}
+      <AppBar position="fixed" sx={{ 
+        width: '100%', 
+        background: 'linear-gradient(to right, #6a1b9a, #ab47bc)', // Deep purple to lighter purple
+        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+      }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="h5" sx={{ fontWeight: 'bold', ml: 2, color: '#fff', textShadow: '1px 1px 2px rgba(0,0,0,0.4)' }}>
             <motion.span whileHover={{ scale: 1.1 }} transition={{ type: 'spring' }}> Jobify</motion.span>
@@ -63,25 +87,76 @@ const Navbar = () => {
           <Box sx={{ display: 'flex', gap: '1rem', mr: 2 }}>
             {!token ? (
               <>
-                <Button color="inherit" component={NavLink} to="/login" sx={{ '&:hover': { backgroundColor: '#29b6f6' } }}>
+                <Button 
+                  color="inherit" 
+                  component={NavLink} 
+                  to="/login" 
+                  sx={{ 
+                    color: '#fff',
+                    '&:hover': { 
+                      backgroundColor: '#00897b' // Darker teal on hover
+                    } 
+                  }}
+                >
                   Login
                 </Button>
-                <Button color="inherit" component={NavLink} to="/register" sx={{ '&:hover': { backgroundColor: '#29b6f6' } }}>
+                <Button 
+                  color="inherit" 
+                  component={NavLink} 
+                  to="/register" 
+                  sx={{ 
+                    color: '#fff',
+                    '&:hover': { 
+                      backgroundColor: '#00897b' 
+                    } 
+                  }}
+                >
                   Register
                 </Button>
               </>
             ) : (
               <>
-                <Button color="inherit" component={NavLink} to="/" sx={{ '&:hover': { backgroundColor: '#29b6f6' } }}>
+                <Button 
+                  color="inherit" 
+                  component={NavLink} 
+                  to="/" 
+                  sx={{ 
+                    color: '#fff',
+                    '&:hover': { 
+                      backgroundColor: '#00897b' 
+                    } 
+                  }}
+                >
                   Home
                 </Button>
-                <Button color="inherit" component={NavLink} to="/dashboard" sx={{ '&:hover': { backgroundColor: '#29b6f6' } }}>
+                <Button 
+                  color="inherit" 
+                  component={NavLink} 
+                  to="/dashboard" 
+                  sx={{ 
+                    color: '#fff',
+                    '&:hover': { 
+                      backgroundColor: '#00897b' 
+                    } 
+                  }}
+                >
                   Dashboard
                 </Button>
                 <IconButton onClick={handleMenuOpen} color="inherit">
                   <AccountCircleOutlinedIcon />
                 </IconButton>
-                <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose} PaperProps={{ sx: { minWidth: 200 } }}>
+                <Menu 
+                  anchorEl={anchorEl} 
+                  open={open} 
+                  onClose={handleMenuClose} 
+                  PaperProps={{ 
+                    sx: { 
+                      minWidth: 200,
+                      backgroundColor: '#fff',
+                      color: '#6a1b9a', // Matching purple theme
+                    } 
+                  }}
+                >
                   <MenuItem disabled sx={{ fontWeight: 'bold' }}>Hi, {username || "User"}</MenuItem>
                   <MenuItem onClick={handleProfileUpdate}>User Info</MenuItem>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -109,16 +184,16 @@ const Footer = () => (
         </Box>
         <Box>
           <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>Quick Links</Typography>
-          <Link href="/" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#fdd835' } }}>
+          <Link href="/" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#26a69a' } }}>
             Home
           </Link>
-          <Link href="/dashboard" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#fdd835' } }}>
+          <Link href="/dashboard" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#26a69a' } }}>
             Dashboard
           </Link>
-          <Link href="/login" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#fdd835' } }}>
+          <Link href="/login" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#26a69a' } }}>
             Login
           </Link>
-          <Link href="/register" underline="hover" sx={{ display: 'block', color: 'black', '&:hover': { color: '#fdd835' } }}>
+          <Link href="/register" underline="hover" sx={{ display: 'block', color: 'black', mb: 0.5, '&:hover': { color: '#26a69a' } }}>
             Register
           </Link>
         </Box>
@@ -160,7 +235,9 @@ const App = () => (
             left: 0,
             width: '100%',
             height: '100%',
+            margin: '20px',
             background: 'rgba(255,255,255,0.85)',
+            marginBottom:'20px',
             zIndex: 0,
           }}
         />
@@ -173,6 +250,7 @@ const App = () => (
             justifyContent: 'center',
             textAlign: 'center',
             zIndex: 1,
+            marginBottom:'10px',
             p: 2,
           }}
         >
@@ -196,7 +274,7 @@ const App = () => (
                 alt="Job Search"
                 style={{ width: '80px', marginBottom: '20px' }}
               />
-              <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', color: '#1769aa' }}>
+              <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', color: '#6a1b9a' }}> {/* Matching header color */}
                 Welcome to Jobify - Your Career Starts Here!
               </Typography>
 
